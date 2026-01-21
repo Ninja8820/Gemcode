@@ -1,7 +1,6 @@
-use std::path::PathBuf;
+use std::{io::stdout, path::PathBuf};
 use clap::Parser;
 
-pub mod row;
 pub mod editor;
 use crate::editor::Editor;
 
@@ -20,9 +19,12 @@ fn main() -> std::io::Result<()>{
     };
 
     
-    while ed.run()? {
+    while ed.run(&mut stdout())? {
         
     }
 
     Ok(())
 }
+// fn main() {
+
+// }
