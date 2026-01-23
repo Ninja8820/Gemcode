@@ -2,6 +2,8 @@ use std::{fs, io::{ErrorKind, Write}, path::PathBuf};
 use crossterm::event::{self, Event};
 use ropey::Rope;
 
+use crate::editor::state::State;
+
 pub(crate) mod consts;
 mod render;
 mod helper;
@@ -9,8 +11,12 @@ mod keypress;
 mod cursor;
 
 pub mod constructors;
+pub(crate) mod state;
 
 pub struct Editor {
+    state: State,
+    input: String,
+
     file: Option<PathBuf>,
     dirty: bool,
 
@@ -26,6 +32,8 @@ pub struct Editor {
 
     row_offset: usize,
     col_offset: usize,
+
+    show_help: bool,
 }
 impl Editor {
     pub fn run<W: Write>(&mut self, out: &mut W) -> std::io::Result<bool> {
